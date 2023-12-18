@@ -14,7 +14,7 @@
 
 import java.util.Random;
 
-public class countPositivesSumNegatives {
+public class CountPositivesSumNegatives {
     private static final int ARRAY_SIZE = 20;
     private static final int MIN_RANDOM = -100;
     private static final int MAX_RANDOM = 100;
@@ -28,7 +28,7 @@ public class countPositivesSumNegatives {
         int[] numbers = new int[ARRAY_SIZE];
 
         for (int i = 0; i < numbers.length; i++) {
-            numbers[i] = countPositivesSumNegatives.randomNumber(MIN_RANDOM, MAX_RANDOM);
+            numbers[i] = CountPositivesSumNegatives.randomNumber(MIN_RANDOM, MAX_RANDOM);
         }
 
         return numbers;
@@ -63,19 +63,19 @@ public class countPositivesSumNegatives {
     }
 
     public static void main(String[] args) {
-        int[] numbers = countPositivesSumNegatives.createArray();
+        int[] numbers = CountPositivesSumNegatives.createArray();
 
         for (int i = 0; i < numbers.length; i++) {
             System.out.println((i + 1) + " num of arr: " + numbers[i]);
         }
 
-        countPositivesSumNegatives.multiplyElementsByTwo(numbers);
+        CountPositivesSumNegatives.multiplyElementsByTwo(numbers);
 
         for (int i = 0; i < numbers.length; i++) {
             System.out.println((i + 1) + " num of arr: " + numbers[i]);
         }
 
-        int[] newArray = countPositivesSumNegatives.calculateSum(numbers);
+        int[] newArray = CountPositivesSumNegatives.calculateSum(numbers);
         System.out.println("Sum of positive numbers of arr: " + newArray[0]);
         System.out.println("Sum of negative numbers of arr: " + newArray[1]);
 

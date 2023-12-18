@@ -1,4 +1,4 @@
-public class comparison {
+public class Comparison {
     public static void main(String[] args) {
         // Выделяется память
         // Memory is allocated

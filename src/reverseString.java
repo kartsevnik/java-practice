@@ -1,4 +1,4 @@
-public class reverseString {
+public class ReverseString {
     public static String reverse(String str) {
         String result = "";
         for (int i = 0; i <= str.length() - 1; i++) {
@@ -9,6 +9,6 @@ public class reverseString {
 
     public static void main(String[] args) {
 
-        System.out.println(reverseString.reverse("Hexlet"));
+        System.out.println(ReverseString.reverse("Hexlet"));
     }
 }

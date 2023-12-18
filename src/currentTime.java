@@ -1,6 +1,6 @@
 import java.time.LocalDate;
 
-public class currentTime {
+public class CurrentTime {
 
     public static void main(String[] args) {
         var currentDate = LocalDate.now();
