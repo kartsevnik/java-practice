@@ -12,7 +12,7 @@ public class Factorial {
             System.out.println(result);
 
         } catch (NumberFormatException e) {
-            System.out.println("La stringa inserita non è number.");
+            System.out.println("La stringa inserita non è numero.");
         }
         scanner.close();
     }
