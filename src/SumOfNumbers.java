@@ -1,6 +1,6 @@
 public class SumOfNumbers {
 
-    // my resolution
+    // my solution
     public static int GetSum(int a, int b) {
         int sum = 0;
         if (b > a) {
@@ -15,6 +15,7 @@ public class SumOfNumbers {
         return sum;
     }
 
+    // solution from codewars
     public static int FromCodewars(int a, int b) {
         return (a + b) * (Math.abs(a - b) + 1) / 2;
     }

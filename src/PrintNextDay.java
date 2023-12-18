@@ -1,3 +1,7 @@
+// There are three numbers - day, month and year introduced by the user from the console.
+// Determine the date of the next day in the format "Day. Messenger. God".
+// Take into account the transition to the next month, as well as the next year.
+// Formatting the line "Day. Messyats. God" to take into a separate function.
 
 // Имеются три числа - день, месяц и год, вводимые пользователем с консоли.
 // Вывести дату следующего дня в формате "День.Месяц.Год".

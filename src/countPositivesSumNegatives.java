@@ -83,7 +83,7 @@ public class countPositivesSumNegatives {
 
 }
 
-// Soluzione di codewars
+// Solution from codewars
 
 // public class Kata
 // {
