@@ -6,13 +6,13 @@ public class BinaryToDecimal {
 
         System.out.println("Inserisci una stringa binaria:");
         String binaryString = scanner.nextLine();
-
-        int decimalValue = BinaryToDecimal(binaryString);
+        int decimalValue = convert(binaryString);
         System.out.println("Valore decimale: " + decimalValue);
+
         scanner.close();
     }
 
-    public static int BinaryToDecimal(String binaryString) {
+    public static int convert(String binaryString) {
         int decimalValue = 0;
 
         try {
@@ -23,4 +23,5 @@ public class BinaryToDecimal {
 
         return decimalValue;
     }
+
 }
