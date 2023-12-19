@@ -37,10 +37,10 @@ public class ManipulazioneStringhe {
 
     public static String getLastTwoSymbols(String stringa) {
         int lunghezza = lunghezza(stringa);
-        char lastSymbol = stringa.charAt(lunghezza - 1);
-        char prelastSymbol = stringa.charAt(lunghezza - 2);
-        String result = "" + prelastSymbol + lastSymbol;
-        return result;
+        // char lastSymbol = stringa.charAt(lunghezza - 1);
+        // char prelastSymbol = stringa.charAt(lunghezza - 2);
+        // String result = "" + prelastSymbol + lastSymbol;
+        return stringa.substring((lunghezza - 2), lunghezza);
     }
 
     public static char getfirstSymbol(String stringa) {
