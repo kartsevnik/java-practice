@@ -18,6 +18,10 @@ public class SumOfDigits {
     public static int sumOfDigits(int num) {
         int sum = 0;
 
+        if (num < 0) {
+            num *= -1;
+        }
+
         // pass for each number of numbers
         // Проходим по каждой цифре числа
         while (num != 0) {
