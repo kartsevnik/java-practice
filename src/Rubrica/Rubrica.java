@@ -62,22 +62,23 @@ public class Rubrica {
     public Persona[] cercaContattiPerIniziale(char iniziale) {
         iniziale = Character.toLowerCase(iniziale);
         int contattiTrovati = 0;
-
+        Persona[] contattiCorrispondenti = null;
+        // conto gli elementi corrispondenti alla ricerca
         for (int i = 0; i < elenco.length; i++) {
-            if (elenco[i] != null && elenco[i].nome.toLowerCase().charAt(0) == iniziale
-                    || elenco[i].cognome.toLowerCase().charAt(0) == iniziale) {
+            if (elenco[i] != null
+                    && (elenco[i].nome.toLowerCase().charAt(0) == iniziale
+                            || elenco[i].cognome.toLowerCase().charAt(0) == iniziale)) {
                 contattiTrovati += 1;
             }
         }
 
-        Persona[] contattiCorrispondenti = null;
         if (contattiTrovati > 0) {
             contattiCorrispondenti = new Persona[contattiTrovati];
             int j = 0;
             for (int i = 0; i < elenco.length; i++) {
                 if (elenco[i] != null &&
-                        elenco[i].nome.toLowerCase().charAt(0) == iniziale ||
-                        elenco[i].cognome.toLowerCase().charAt(0) == iniziale) {
+                        (elenco[i].nome.toLowerCase().charAt(0) == iniziale ||
+                                elenco[i].cognome.toLowerCase().charAt(0) == iniziale)) {
                     contattiCorrispondenti[j] = elenco[i];
                 }
             }
@@ -89,26 +90,35 @@ public class Rubrica {
     // carratteri)
     // altrimenti non faccio la ricerca e ritorno null
 
-    // public Persona[] cercaContattiPerPattern(String pattern) {
-    // int contattiTrovati = 0;
+    public Persona[] cercaContattiPerPattern(String pattern) {
+        if (pattern == null || pattern.length() < 3)
+            return null;
 
-    // for (int i = 0; i < elenco.length; i++) {
-    // if (elenco[i] != null && elenco[i].nome.charAt(0) == pattern) {
-    // contattiTrovati += 1;
-    // }
-    // }
+        int contattiTrovati = 0;
+        Persona[] contattiCorrispondenti = null;
 
-    // Persona[] contattiCorrispondenti = null;
-    // if (contattiTrovati > 0) {
-    // contattiCorrispondenti = new Persona[contattiTrovati];
-    // int j = 0;
-    // for (int i = 0; i < elenco.length; i++) {
-    // if (elenco[i] != null && elenco[i].nome.charAt(0) == pattern) {
-    // contattiCorrispondenti[j] = elenco[i];
-    // }
-    // }
-    // }
-    // return contattiCorrispondenti;
-    // }
+        for (int i = 0; i < elenco.length; i++) {
+            if (elenco[i] != null
+                    && (elenco[i].nome.toLowerCase().indexOf(pattern.toLowerCase()) > 0 ||
+                            elenco[i].cognome.toLowerCase().indexOf(pattern.toLowerCase()) > 0))
+                contattiTrovati = contattiTrovati + 1;
+        }
+
+        if (contattiTrovati > 0) {
+            contattiCorrispondenti = new Persona[contattiTrovati];
+            // popolo l'array di ritorno (contattiCorrispondenti)
+            int j = 0;
+            for (int i = 0; i < elenco.length; i = i + 1) {
+                if (elenco[i] != null
+                        && (elenco[i].nome.toLowerCase().indexOf(pattern.toLowerCase()) > 0 ||
+                                elenco[i].cognome.toLowerCase().indexOf(pattern.toLowerCase()) > 0)) {
+
+                    contattiCorrispondenti[j] = elenco[i];
+                    j = j + 1;
+                }
+            }
+        }
+        return contattiCorrispondenti;
+    }
 
 }

@@ -45,11 +45,11 @@ public class RubricaUnitTest {
         assertArrayEquals(contattiTrovati, contattiAttesi);
     }
 
-    // @Test
-    // public void cercaContattiPerPatternTest() {
-    // Persona[] contattiTrovati = rubrica.cercaContattiPerPattern("Nicc");
-    // Persona[] contattiAttesi = new Persona[1];
-    // contattiAttesi[0] = new Persona("Niccolo", "Paganini");
-    // assertArrayEquals(contattiTrovati, contattiAttesi);
-    // }
+    @Test
+    public void cercaContattiPerPatternTest() {
+        Persona[] contattiTrovati = rubrica.cercaContattiPerPattern("icco");
+        Persona[] contattiAttesi = new Persona[1];
+        contattiAttesi[0] = new Persona("Niccolo", "Paganini");
+        assertArrayEquals(contattiAttesi, contattiTrovati);
+    }
 }
