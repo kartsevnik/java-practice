@@ -16,4 +16,13 @@ public class Persona {
         this.cognome = cognome;
         this.telefono = telefono;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Persona) {
+            Persona p = (Persona) obj;
+            return this.nome.equalsIgnoreCase(p.nome) && this.cognome.equalsIgnoreCase(p.cognome);
+        }
+        return false;
+    }
 }
