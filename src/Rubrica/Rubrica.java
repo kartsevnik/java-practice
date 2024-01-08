@@ -13,6 +13,17 @@ public class Rubrica {
         elenco = new Persona[50];
     }
 
+    public void printAll() {
+        for (int i = 0; i < elenco.length; i = i + 1) {
+            if (elenco[i] != null) {
+                System.out.println("Contatto " + i);
+                System.out.println(elenco[i] + "\n");
+            }
+
+        }
+
+    }
+
     public void addContatto(Persona contatto) {
         elenco[ultimoContattoInserito] = contatto;
         ultimoContattoInserito = ultimoContattoInserito + 1;
