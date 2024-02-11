@@ -1,0 +1,273 @@
+// Implementare un sistema Bibliotecario che consenta all’utenza di poter prendere
+// in prestito dei Libri. I Libri devono esser restituiti entro un tempo massimo di un
+// mese (30 giorni) e l’utente può richiedere in prestito al massimo 3 libri per volta.
+// - Fornire l’elenco di tutti i Libri rilasciati in prestito (dalla biblioteca)
+// -Fornire l’elenco dei Libri rilasciati per una determinata persona
+
+// Внедрите библиотечную систему, позволяющую пользователям брать книги на дом. 
+// Одолжить книги. 
+// Книги должны быть возвращены в течение не более одного месяца (30 дней), 
+// и пользователь может взять не более 3 книг за один раз.
+// - Предоставить список всех книг, взятых на время (из библиотеки).
+// - Предоставить список книг, выданных конкретному человеку
+
+package Biblioteca1;
+
+import java.util.Scanner;
+
+import Biblioteca1.Library.*;
+import Biblioteca1.Users.*;
+
+
+public class Principale {
+
+    public static void main(String[] args) {
+
+        Library library = createLibrary();
+        Users Users = createUsers();
+        TemporaryBookList tempBookList = new TemporaryBookList();
+
+        Scanner input = new Scanner(System.in);
+        int scelta = 0;
+        do {
+            scelta = menu(input);
+
+            switch (scelta) {
+                case 1:
+                    // View List of Books in the Library
+                    System.out.println();
+                    library.toString();
+                    break;
+                case 2:
+                    // View List of Users in the Library
+                    System.out.println();
+                    Users.toString();
+                    break;
+                case 3:
+                    // Add user
+                    System.out.println();
+                    User newUser = addUser(input);
+                    Users.addUser(newUser);
+                    break;
+                case 4:
+                    // Remove user
+                    System.out.println();
+                    Users.toString();
+                    int index = removeUser(input);
+                    Users.removeUserByIndex(index);
+                    break;
+                case 5:
+                    // Issue the book
+                    System.out.println();
+
+                    Users.toString();
+                    System.out.println("Enter the user number");
+                    int userIndex = input.nextInt();
+
+                    library.toString();
+                    System.out.println("Choose a book");
+                    int bookIndex = input.nextInt();
+
+                    // check availability =======================
+                    User idUser = Users.getUser(userIndex);
+                    int amountBookUser = idUser.getAvailableBooks();
+
+                    BookList tmpBookList = library.getBookList(bookIndex);
+                    int amountBook = tmpBookList.getAmount();
+
+                    if (amountBookUser == 0) {
+                        System.out.println("You cannot take the book.First return those who took early");
+                        break;
+                    }
+
+                    if (amountBook == 0) {
+                        System.out.println("Unfortunately, these books were dismantled, come later");
+                        break;
+                    }
+                    // ======================= =======================
+
+                    // create Book for issuing
+                    tempBookList = createTBook(tempBookList, tmpBookList, idUser, amountBookUser, amountBook);
+
+                    System.out.println(
+                            "Thank you for using our library, do not forget that the book is issued up to a maximum of 30 days");
+                    break;
+                case 6:
+                    // List of all books taken for a while (from the library)
+                    System.out.println();
+                    System.out.println(tempBookList.toStringOnlyBook());
+                    break;
+                case 7:
+                    // List of books issued to a particular person
+                    Users.toString();
+                    issuedBooks(tempBookList, Users, input);
+                    break;
+            }
+        } while (scelta > 0);
+
+        System.out.println("Finished program");
+        input.close();
+
+    }
+
+    public static int menu(Scanner i) {
+        System.out.println();
+        System.out.println("Choose an action:");
+        System.out.println("1. View List of Books in the Library");
+        System.out.println("2. View List of Users in the Library");
+        System.out.println("3. Add user");
+        System.out.println("4. Remove user");
+        System.out.println("5. Issue the book");
+        System.out.println("6. List of all books taken for a while (from the library)");
+        System.out.println("7. List of books issued to a particular person");
+        System.out.println("0 - exit");
+        return i.nextInt();
+    }
+
+    public static Library createLibrary() {
+        // Create books
+        Book book1 = new Book("War and Peace", "Leo Tolstoy");
+        Book book2 = new Book("Crime and Punishment", "Fyodor Dostoevsky");
+        Book book3 = new Book("The Master and Margarita", "Mikhail Bulgakov");
+        Book book4 = new Book("1984", "George Orwell");
+        Book book5 = new Book("Harry Potter and the Philosopher's Stone", "J.K. Rowling");
+        Book book6 = new Book("Anna Karenina", "Leo Tolstoy");
+        Book book7 = new Book("The Little Prince", "Antoine de Saint-Exupéry");
+        Book book8 = new Book("Ulysses", "James Joyce");
+        Book book9 = new Book("To Kill a Mockingbird", "Harper Lee");
+        Book book10 = new Book("The Great Gatsby", "F. Scott Fitzgerald");
+        Book book11 = new Book("Pride and Prejudice", "Jane Austen");
+        Book book12 = new Book("The Catcher in the Rye", "J.D. Salinger");
+        Book book13 = new Book("Moby-Dick", "Herman Melville");
+        Book book14 = new Book("The Lord of the Rings", "J.R.R. Tolkien");
+        Book book15 = new Book("The Hobbit", "J.R.R. Tolkien");
+        Book book16 = new Book("Brave New World", "Aldous Huxley");
+        Book book17 = new Book("The Picture of Dorian Gray", "Oscar Wilde");
+        Book book18 = new Book("Frankenstein", "Mary Shelley");
+        Book book19 = new Book("Alice's Adventures in Wonderland", "Lewis Carroll");
+        Book book20 = new Book("The Adventures of Sherlock Holmes", "Arthur Conan Doyle");
+
+        // Create books with amount
+        BookList bookList1 = new BookList(book1, 5);
+        BookList bookList2 = new BookList(book2, 5);
+        BookList bookList3 = new BookList(book3, 3);
+        BookList bookList4 = new BookList(book4, 5);
+        BookList bookList5 = new BookList(book5, 1);
+        BookList bookList6 = new BookList(book6, 5);
+        BookList bookList7 = new BookList(book7, 5);
+        BookList bookList8 = new BookList(book8, 5);
+        BookList bookList9 = new BookList(book9, 0);
+        BookList bookList10 = new BookList(book10, 5);
+        BookList bookList11 = new BookList(book11, 5);
+        BookList bookList12 = new BookList(book12, 7);
+        BookList bookList13 = new BookList(book13, 5);
+        BookList bookList14 = new BookList(book14, 5);
+        BookList bookList15 = new BookList(book15, 1);
+        BookList bookList16 = new BookList(book16, 5);
+        BookList bookList17 = new BookList(book17, 5);
+        BookList bookList18 = new BookList(book18, 2);
+        BookList bookList19 = new BookList(book19, 5);
+        BookList bookList20 = new BookList(book20, 3);
+
+        // Create library
+        Library library = new Library();
+
+        library.addBookList(1, bookList1);
+        library.addBookList(2, bookList2);
+        library.addBookList(3, bookList3);
+        library.addBookList(4, bookList4);
+        library.addBookList(5, bookList5);
+        library.addBookList(6, bookList6);
+        library.addBookList(7, bookList7);
+        library.addBookList(8, bookList8);
+        library.addBookList(9, bookList9);
+        library.addBookList(10, bookList10);
+        library.addBookList(11, bookList11);
+        library.addBookList(12, bookList12);
+        library.addBookList(13, bookList13);
+        library.addBookList(14, bookList14);
+        library.addBookList(15, bookList15);
+        library.addBookList(16, bookList16);
+        library.addBookList(17, bookList17);
+        library.addBookList(18, bookList18);
+        library.addBookList(19, bookList19);
+        library.addBookList(20, bookList20);
+        return library;
+    }
+
+    public static Users createUsers() {
+
+        // Create users
+        User user1 = new User("Mykola", "Kartsev", 235654656);
+        User user2 = new User("Alice", "Smith", 987654321);
+        User user3 = new User("Bob", "Johnson", 456789123);
+        User user4 = new User("Emily", "Brown", 654321987);
+        User user5 = new User("Michael", "Davis", 789123456);
+        User user6 = new User("Emma", "Wilson", 321987654);
+        User user7 = new User("William", "Taylor", 654987321);
+        User user8 = new User("Sophia", "Anderson", 159753468);
+        User user9 = new User("James", "Martinez", 357159486);
+        User user10 = new User("Olivia", "Thompson", 852963741);
+        User user11 = new User("John", "Doe", 123456789);
+
+        // // Create arraylist of users
+        Users Users = new Users();
+
+        Users.addUser(user1);
+        Users.addUser(user2);
+        Users.addUser(user3);
+        Users.addUser(user4);
+        Users.addUser(user5);
+        Users.addUser(user6);
+        Users.addUser(user7);
+        Users.addUser(user8);
+        Users.addUser(user9);
+        Users.addUser(user10);
+        Users.addUser(user11);
+        return Users;
+    }
+
+    public static User addUser(Scanner i) {
+        System.out.println("Write name");
+        String name = i.nextLine();
+
+        System.out.println("Write surname");
+        String surname = i.nextLine();
+
+        System.out.println("Write codice fiscale");
+        int cf = i.nextInt();
+        User u = new User(name, surname, cf);
+        return u;
+    }
+
+    public static int removeUser(Scanner i) {
+
+        System.out.println("Enter the user number");
+
+        int index = i.nextInt();
+        return index;
+    }
+
+    public static void issuedBooks(TemporaryBookList tempBookList, Users u, Scanner i) {
+
+        System.out.println("Enter the user number");
+        int userTIndex = i.nextInt();
+        User idTUser = u.getUser(userTIndex);
+
+        System.out.println();
+        System.out.println(idTUser);
+        System.out.println(tempBookList.toStringOnlyUserBook(idTUser));
+        // tempBookList.toStringOnlyBook();
+
+    }
+
+    public static TemporaryBookList createTBook(TemporaryBookList tempBookList, BookList tmpBookList, User idUser,
+            int amountBookUser, int amountBook) {
+        TemporaryBook tempbook = new TemporaryBook(tmpBookList.getBook(), idUser);
+        idUser.setAvailableBooks(amountBookUser - 1);
+        tmpBookList.setAmount(amountBook - 1);
+        tempBookList.addTempBook(tempbook);
+        System.out.println(tempbook);
+        return tempBookList;
+    }
+}
