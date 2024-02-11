@@ -3,15 +3,15 @@ package Tasks;
 public class findEqualsArray {
     public static void main(String[] args) {
         int[][] values1 = {
-                { 1, 2, 3 },
-                { 4, 5, 6, 7 },
-                { 8, 9, 1 }
+                {1, 2, 3},
+                {4, 5, 6, 7},
+                {8, 9, 1}
         };
 
         int[][] values2 = {
-                { 1, 2, 3 },
-                { 4, 5, 6, 7 },
-                { 8, 9, 0 }
+                {1, 2, 3},
+                {4, 5, 6, 7},
+                {8, 9, 0}
         };
         System.out.println(equals(values1, values2));
     }
@@ -38,3 +38,4 @@ public class findEqualsArray {
         return true;
     }
 }
+
