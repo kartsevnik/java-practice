@@ -26,7 +26,8 @@ public class Book {
         return author;
     }
 
-    public void outputToString() {
+    public String toString() {
         System.out.println(this.name + " - " + this.author);
+        return null;
     }
 }

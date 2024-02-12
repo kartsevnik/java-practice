@@ -11,7 +11,7 @@ public class BorrowBook {
     public BorrowBook(Book book, User user) {
         this.book = book;
         this.user = user;
-        Date dateOfBorrow = new Date();
+        this.dateOfBorrow = new Date();
     }
 
     public Book getBook() {
@@ -43,7 +43,7 @@ public class BorrowBook {
     @Override
     public String toString() {
         return "BorrowBook{" +
-                "book=" + book +
+                "book=" + book.getName() + " Author: " + book.getAuthor() +
                 ", user=" + user +
                 ", dateOfBorrow=" + dateOfBorrow +
                 '}';

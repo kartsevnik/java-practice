@@ -39,6 +39,33 @@ public class Biblioteca {
         this.borrowBooks = borrowBooks;
     }
 
+    public void usersToString () {
+        users.forEach((key, value) -> {
+            System.out.println("Key: " + key + ", User: " + value.getName() + " " + value.getSurname() + " tax code: " + value.getTaxCode() + ", available books " + value.getAvailableBooks());
+        });
+    }
+
+    public void booksToString () {
+        books.forEach((key, value) -> {
+            System.out.println("Key: " + key + ", Book: " + value.getBook().getName() + ", Author: " + value.getBook().getAuthor() + " Amount: " + value.getAmountOfBooks());
+        });
+    }
+
+    public void borrowBooksToString () {
+        borrowBooks.forEach((key, value) -> {
+            System.out.println("Key: " + key + ", Book: " + value.getBook().getName() + ", Author: " + value.getBook().getAuthor());
+        });
+    }
+
+    public void getUserBorrowBooksToString (User user) {
+
+        borrowBooks.forEach((key, value) -> {
+        if (value.getUser() == user) {
+            System.out.println("Key: " + key + ", Book: " + value.getBook().getName() + ", Author: " + value.getBook().getAuthor());
+        }
+        });
+    }
+
     @Override
     public String toString() {
         return "Biblioteca{" +

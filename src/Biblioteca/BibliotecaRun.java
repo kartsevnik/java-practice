@@ -22,7 +22,7 @@ public class BibliotecaRun {
         HashMap<Integer, BorrowBook> borrowBooks = addArrOfBorrowBook();
         Biblioteca biblioteca = new Biblioteca(users, books, borrowBooks);
 
-        System.out.println(biblioteca.users.get(1).toString());
+//        System.out.println(biblioteca.users.get(1).toString());
 
         Scanner input = new Scanner(System.in);
         int scelta = 0;
@@ -32,16 +32,11 @@ public class BibliotecaRun {
             switch (scelta) {
                 case 1:
                     // View List of Books in the Library
-                    biblioteca.books.forEach((key, value) -> {
-                        System.out.println("Key: " + key + ", Book: " + value.getBook().getName() + " " + value.getBook().getAuthor() + " Amount: " + value.getAmountOfBooks());
-                    });
-
+                    biblioteca.booksToString();
                     break;
                 case 2:
                     // View List of Users in the Library
-                    biblioteca.users.forEach((key, value) -> {
-                        System.out.println("Key: " + key + ", User: " + value.getName() + " " + value.getSurname() + " tax code: " + value.getTaxCode() + ", available books " + value.getAvailableBooks());
-                    });
+                    biblioteca.usersToString();
                     break;
                 case 3:
                     // Add user
@@ -51,56 +46,66 @@ public class BibliotecaRun {
                     break;
                 case 4:
                     // Remove user
-//                    System.out.println();
-//                    Users.toString();
-//                    int index = removeUser(input);
-//                    Users.removeUserByIndex(index);
+                    System.out.println();
+                    biblioteca.usersToString();
+
+                    System.out.println("Enter the number of user");
+                    int numOfUser = input.nextInt();
+                    users.remove(numOfUser);
+//                    User delUser = users.get(numOfUser);
                     break;
                 case 5:
                     // Issue the book
-//                    System.out.println();
+                    System.out.println();
+                    biblioteca.usersToString();
+
+                    System.out.println("Enter the user number");
+                    int userIndex = input.nextInt();
 //
-//                    Users.toString();
-//                    System.out.println("Enter the user number");
-//                    int userIndex = input.nextInt();
-//
-//                    library.toString();
-//                    System.out.println("Choose a book");
-//                    int bookIndex = input.nextInt();
+                    biblioteca.booksToString();
+                    System.out.println("Choose a book");
+                    int bookIndex = input.nextInt();
 
                     // check availability =======================
-//                    User idUser = Users.getUser(userIndex);
-//                    int amountBookUser = idUser.getAvailableBooks();
+                    User idUser = users.get(userIndex);
+                    int amountBookUser = idUser.getAvailableBooks();
 //
-//                    BookList tmpBookList = library.getBookList(bookIndex);
-//                    int amountBook = tmpBookList.getAmount();
+                    BookWithAmount borrowBook = books.get(bookIndex);
+                    int amountBook = borrowBook.getAmountOfBooks();
 //
-//                    if (amountBookUser == 0) {
-//                        System.out.println("You cannot take the book.First return those who took early");
-//                        break;
-//                    }
+                    if (amountBookUser == 0) {
+                        System.out.println("You cannot take the book.First return those who took early");
+                        break;
+                    }
 //
-//                    if (amountBook == 0) {
-//                        System.out.println("Unfortunately, these books were dismantled, come later");
-//                        break;
-//                    }
+                    if (amountBook == 0) {
+                        System.out.println("Unfortunately, these books were dismantled, come later");
+                        break;
+                    }
                     // ======================= =======================
 
                     // create Book for issuing
-//                    tempBookList = createTBook(tempBookList, tmpBookList, idUser, amountBookUser, amountBook);
+                    borrowBooks = createTBook(borrowBooks, borrowBook,  idUser, amountBookUser, amountBook);
 //
-//                    System.out.println(
-//                            "Thank you for using our library, do not forget that the book is issued up to a maximum of 30 days");
+                    System.out.println(
+                            "Thank you for using our library, do not forget that the book is issued up to a maximum of 30 days");
                     break;
                 case 6:
                     // List of all books taken for a while (from the library)
-//                    System.out.println();
-//                    System.out.println(tempBookList.toStringOnlyBook());
+                    System.out.println();
+                    biblioteca.borrowBooksToString();
                     break;
                 case 7:
-                    // List of books issued to a particular person
-//                    Users.toString();
-//                    issuedBooks(tempBookList, Users, input);
+                    System.out.println();
+                    biblioteca.usersToString();
+
+                    System.out.println("Enter the user number");
+                    int userTIndex = input.nextInt();
+                    User idTUser = users.get(userTIndex);
+
+                    System.out.println();
+                    System.out.println(idTUser);
+                    biblioteca.getUserBorrowBooksToString(idTUser);
                     break;
             }
         } while (scelta > 0);
@@ -125,10 +130,10 @@ public class BibliotecaRun {
     }
 
     private static HashMap<Integer, BorrowBook> addArrOfBorrowBook() {
-        HashMap<Integer, BorrowBook> borrowBooks = new HashMap<>();
-        //        BorrowBook borrowBook1 = new BorrowBook(book1.getBook(), user2);
+//        HashMap<Integer, BorrowBook> borrowBooks = new HashMap<>();
+//        BorrowBook borrowBook1 = new BorrowBook(book1.getBook(), user2);
 //        borrowBooks.put(1, borrowBook1);
-        return borrowBooks;
+        return new HashMap<>();
     }
 
     private static HashMap<Integer, BookWithAmount> addArrOfBooks() {
@@ -219,7 +224,22 @@ public class BibliotecaRun {
 
         System.out.println("Write tax code");
         int taxCode = i.nextInt();
-        User newUser = new User(newName, newSurname, taxCode);
-        return newUser;
+        return new User(newName, newSurname, taxCode);
     }
+
+    public static HashMap<Integer, BorrowBook> createTBook(HashMap<Integer, BorrowBook> borrowBooks, BookWithAmount book, User idUser,
+                                                int amountBookUser, int amountBook) {
+        BorrowBook newBorrowBook = new BorrowBook(book.getBook(), idUser);
+        idUser.setAvailableBooks(amountBookUser - 1);
+        book.setAmountOfBooks(amountBook - 1);
+
+        borrowBooks.put((borrowBooks.size() + 1), newBorrowBook);
+        System.out.println(newBorrowBook.toString());
+        return borrowBooks;
+    }
+
+    public static void issuedBooks(HashMap<Integer, BorrowBook> borrowBooks, HashMap<Integer, BorrowBook> users, Scanner i) {
+
+    }
+
 }
